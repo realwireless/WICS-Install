@@ -1,2 +1,2 @@
 # WICS-Install
-Installation of WICS to ESP32 Microscontroller
+Installation of WICS add-on to nowRail to ESP32 Microcontroller
