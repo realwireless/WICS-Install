@@ -1,13 +1,15 @@
 {
   "name": "WICS Gateway - DCC-IN + DCC-EX",
   "version": "1.0.1",
-  "chipFamily": "ESP32-C6",
-  "installable": {
-    "images": [
-      {
-        "path": "firmware_gateway1.bin",
-        "offset": 0
-      }
-    ]
-  }
+  "builds": [
+    {
+      "chipFamily": "ESP32-C6",
+      "parts": [
+        {
+          "path": "firmware_gateway1.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
 }
