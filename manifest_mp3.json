@@ -1,0 +1,13 @@
+{
+  "name": "WICS MP3 Sound Board",
+  "version": "1.0.1",
+  "chipFamily": "ESP32-S3",
+  "installable": {
+    "images": [
+      {
+        "path": "firmware_mp3.bin",
+        "offset": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "WICS Gateway - DCC-IN",
+  "version": "1.0.1",
+  "chipFamily": "ESP32-C6",
+  "installable": {
+    "images": [
+      {
+        "path": "firmware_gateway.bin",
+        "offset": 0
+      }
+    ]
+  }
+}

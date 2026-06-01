@@ -1,0 +1,13 @@
+{
+  "name": "WICS PCA9685 Servo Board",
+  "version": "1.0.1",
+  "chipFamily": "ESP32-S3",
+  "installable": {
+    "images": [
+      {
+        "path": "firmware_pca.bin",
+        "offset": 0
+      }
+    ]
+  }
+}
