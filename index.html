@@ -13,20 +13,19 @@
       }
       .content { max-width: 600px; margin: 0 auto; padding: 12px; }
       a { color: #03a9f4; }
-      .invisible { display: none; }
       .radios li { list-style: none; line-height: 2em; }
       @media (prefers-color-scheme: dark) {
         body { background-color: #333; color: #fff; }
         a { color: #58a6ff; }
       }
     </style>
-    <!-- Vi använder den stabila versionen som ESPHome själva kör på sin testsida -->
+    <!-- Korrigerad skriptlänk med en exakt versionssiffra (10.1.5) för stabil inläsning -->
     <script type="module" src="https://unpkg.com"></script>
   </head>
   <body>
     <div class="content">
       <h1>WICS-ESP32 installer</h1>
-      <p>This is TEST2 and NOT in Production, Please come back later.</p>
+      <p>This is TEST3 and NOT in Production, Please come back later.</p>
       
       <p>Select your Board</p>
       <ul class="radios">
@@ -47,31 +46,29 @@
         </li>
        </ul>
 
-      <!-- Denna behållare är tom från början så att ingen gammal konfiguration ligger sparad -->
-      <p class="button-row" align="center"></p>
+      <!-- Här i denna container kommer knappen att skapas i samma sekund som ett val görs -->
+      <div id="buttonContainer" style="text-align: center; margin: 20px 0; min-height: 50px;"></div>
 
       <div class="footer">
         <a href="https://github.io">WICS - Wireless Control System</a> &mdash;
-        Installer powered by <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a>.
+        Installer powered by <a href="https://github.io">ESP Web Tools</a>.
       </div>
     </div>
 
     <script>
       document.querySelectorAll('input[name="type"]').forEach(radio =>
         radio.addEventListener("change", () => {
-          const buttonContainer = document.querySelector('.button-row');
+          const container = document.getElementById('buttonContainer');
           
-          // 1. Töm behållaren helt (raderar den gamla knappen ur webbläsarens minne)
-          buttonContainer.innerHTML = '';
+          // Töm containern helt
+          container.innerHTML = '';
           
-          // 2. Skapa en helt ny, fräsch installationsknapp i realtid
+          // Skapa en ny knapp med rätt manifestfil kopplad till sig
           const newButton = document.createElement('esp-web-install-button');
+          newButton.manifest = `./manifest_${radio.value}.json`;
           
-          // 3. Sätt sökvägen till manifest-filen (t.ex. ./manifest_gateway.json)
-          newButton.setAttribute('manifest', `./manifest_${radio.value}.json`);
-          
-          // 4. Skjut in den nya knappen på skärmen
-          buttonContainer.appendChild(newButton);
+          // Skjut in knappen på skärmen
+          container.appendChild(newButton);
         })
       );
     </script>
