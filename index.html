@@ -31,15 +31,6 @@
       a {
         color: #03a9f4;
       }
-      .invisible {
-        visibility: hidden;
-      }
-      .hidden {
-        display: none;
-      }
-      esp-web-install-button[install-unsupported] {
-        visibility: inherit;
-      }
       .content pre {
         max-width: 100%;
         overflow-y: scroll;
@@ -75,7 +66,8 @@
         }
       }
     </style>
-    <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+    <!-- Vi uppdaterar till det officiella skriptet som ESPHome själva använder på sin testsida -->
+    <script type="module" src="https://unpkg.com"></script>
   </head>
   <body>
     <div class="content">
@@ -84,7 +76,8 @@
       <p>Select your Board</p>
       <ul class="radios">
         <li>
-          <label><input type="radio" name="type" value="gateway" /> Gateway Board - DCC-IN</label>
+          <!-- Vi sätter checked på Gateway som standard -->
+          <label><input type="radio" name="type" value="gateway" checked /> Gateway Board - DCC-IN</label>
         </li>
         <li>
           <label><input type="radio" name="type" value="gateway1" /> Gateway Board - DCC-IN + DCC-EX</label>
@@ -106,28 +99,30 @@
         </li>
        </ul>
       <p class="button-row" align="center">
-        <esp-web-install-button class="invisible"></esp-web-install-button>
+        <!-- Knappen startar med gateway-manifestet färdigladdat och är fullt synlig direkt -->
+        <esp-web-install-button manifest="./manifest_gateway.json"></esp-web-install-button>
       </p>
 
       <div class="footer">
-        <a href="https://realwireless.github.io/WICS"
+        <a href="https://github.io"
           >WICS - Wireless Control System</a
         > &mdash;
-        Installer powered by <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a>.
+        Installer powered by <a href="https://github.io">ESP Web Tools</a>.
+      </div>
     </div>
-       <script>
+
+    <script>
       document.querySelectorAll('input[name="type"]').forEach(radio =>
         radio.addEventListener("change", () => {
           const buttonContainer = document.querySelector('.button-row');
           
-          // Radera den gamla knappen helt för att rensa webbläsarens minne
+          // Rensar bort den gamla knappen helt
           buttonContainer.innerHTML = '';
           
-          // Skapa en helt ny, ren knapp med det valda manifestet
+          // Skapar en helt ny knapp som tvingar webbläsaren att läsa in det nya manifestet korrekt
           const newButton = document.createElement('esp-web-install-button');
           newButton.setAttribute('manifest', `./manifest_${radio.value}.json`);
           
-          // Lägg till den nya knappen på sidan
           buttonContainer.appendChild(newButton);
         })
       );
