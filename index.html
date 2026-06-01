@@ -115,14 +115,22 @@
         > &mdash;
         Installer powered by <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a>.
     </div>
-    <script>
+       <script>
       document.querySelectorAll('input[name="type"]').forEach(radio =>
         radio.addEventListener("change", () => {
-          const button = document.querySelector('esp-web-install-button');
-          button.manifest = `./manifest_${radio.value}.json`;
-          button.classList.remove('invisible');
-        }
-      ));
+          const buttonContainer = document.querySelector('.button-row');
+          
+          // Radera den gamla knappen helt för att rensa webbläsarens minne
+          buttonContainer.innerHTML = '';
+          
+          // Skapa en helt ny, ren knapp med det valda manifestet
+          const newButton = document.createElement('esp-web-install-button');
+          newButton.setAttribute('manifest', `./manifest_${radio.value}.json`);
+          
+          // Lägg till den nya knappen på sidan
+          buttonContainer.appendChild(newButton);
+        })
+      );
     </script>
   </body>
 </html>
