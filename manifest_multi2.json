@@ -1,13 +1,15 @@
 {
   "name": "WICS Multi II Board",
   "version": "1.0.1",
-  "chipFamily": "ESP32-S3",
-  "installable": {
-    "images": [
-      {
-        "path": "firmware_multi2.bin",
-        "offset": 0
-      }
-    ]
-  }
+  "builds": [
+    {
+      "chipFamily": "ESP32-C6",
+      "parts": [
+        {
+          "path": "firmware_multi2.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
 }
