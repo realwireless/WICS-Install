@@ -1,9 +1,10 @@
 {
   "name": "WICS PCA9685 Board",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "builds": [
     {
       "chipFamily": "esp32s3",
+      "flavor": "cdc",
       "parts": [
         {
           "path": "firmware_pca.bin",
