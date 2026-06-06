@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "builds": [
     {
-      "chipFamily": "ESP32-C6",
+      "chipFamily": "ESP32",
       "parts": [
         {
           "path": "firmware_multi2.bin",
