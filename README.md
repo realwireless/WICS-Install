@@ -20,7 +20,7 @@ Due to a known compatibility bug with the standard ESP Web Tools and the ESP32-S
 Follow these simple steps to flash your device using Google Chrome or Microsoft Edge:
 
 ### 1. Download the Firmware
-* Download the latest sammanslagen binary file here: **[Download firmware_pca.bin](#)** *(Replace this with your actual download link)*
+* Download the latest sammanslagen binary file here: 
 
 ### 2. Put your XIAO ESP32-S3 into Bootloader Mode
 To allow the web browser to flash the chip, you must force it into its hardware bootloader mode:
@@ -31,8 +31,8 @@ To allow the web browser to flash the chip, you must force it into its hardware 
 *(The board's LED will stay dim or off, which means it is successfully waiting for a new firmware).*
 
 ### 3. Flash the Chip via Browser
-1. Open the installation tool in a new tab: **[://spacehuhn.com](https://://spacehuhn.com/)**
-2. Click the big **Connect** button on the page.
+1. Open the installation tool in a new tab: https://esptool.spacehuhn.com/
+2. 2. Click the big **Connect** button on the page.
 3. A popup will appear in your web browser. Select your device's COM port from the list and click **Connect**.
 4. In the first file row, change the address box manually to **`0x0`** (or just `0`).
 5. Click **Choose File** on that same row and select your downloaded `firmware_pca.bin`.
