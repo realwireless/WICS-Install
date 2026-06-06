@@ -4,6 +4,7 @@
   "builds": [
     {
       "chipFamily": "esp32s3",
+      "flavor": "cdc",
       "parts": [
         {
           "path": "firmware_pca.bin",
