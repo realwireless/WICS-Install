@@ -1,6 +1,6 @@
 {
   "name": "WICS PCA9685 Board",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "builds": [
     {
       "chipFamily": "esp32s3",
