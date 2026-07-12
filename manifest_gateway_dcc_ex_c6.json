@@ -1,0 +1,15 @@
+{
+  "name": "WICS Gateway - DCC-IN + DCC-EX ESP32-C6",
+  "version": "1.0.1",
+  "builds": [
+    {
+      "chipFamily": "ESP32-C6",
+      "parts": [
+        {
+          "path": "firmware_gateway_ex_c6.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}
