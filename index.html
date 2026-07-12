@@ -166,15 +166,14 @@
         const val = mainSelect.value;
         resetSubMenus();
 
-        if (val === "gateway_multi") {
-          gatewayContainer.classList.remove('hidden');
-        } else if (val === "mp3_multi") {
-          mp3Container.classList.remove('hidden');
-        } else if (val) {
-          // Direktval för kort utan undermenyer (PCA9685 / Multi II)
-          button.manifest = val;
-          button.classList.remove('invisible');
-        }
+      if (val === "gateway_multi") {
+        gatewayContainer.classList.remove('hidden');
+      } else if (val === "mp3_multi") {
+        mp3Container.classList.remove('hidden');
+      } else if (val) {
+        button.setAttribute('manifest', val); 
+        button.classList.remove('invisible');
+      }   
       });
 
       // Lyssna på Gateway-undermenyn
@@ -190,13 +189,13 @@
       // Gemensam funktion för att sätta manifest-filen från undermenyer
       function handleSubMenuSelection(manifestPath) {
         if (manifestPath) {
-          button.manifest = manifestPath;
+          button.setAttribute('manifest', manifestPath); 
           button.classList.remove('invisible');
         } else {
           button.classList.add('invisible');
           button.removeAttribute('manifest');
         }
-      }
+      }  
     </script>
   </body>
 </html>
