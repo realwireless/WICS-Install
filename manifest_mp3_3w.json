@@ -1,12 +1,12 @@
 {
-  "name": "WICS Gateway - DCC-IN + DCC-EX ESP32-S3",
-  "version": "1.1.0",
+  "name": "WICS MP3 Board 3W",
+  "version": "1.0.0",
   "builds": [
     {
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "firmware_gateway_ex_s3.bin",
+          "path": "firmware_mp3_3w.bin",
           "offset": 0
         }
       ]
