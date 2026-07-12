@@ -92,7 +92,7 @@
       }
     </style>
     <!-- Den ursprungliga skriptlänken som fungerar bäst -->
-    <script type="module" src="https://unpkg.com/esp-web-tools@10.1.1/dist/web/install-button.js?module"></script>
+    <script type="module" src="https://unpkg.com"></script>
   </head>
   <body>
     <div class="content">
@@ -103,21 +103,32 @@
       <label for="main-category"><strong>Select Board:</strong></label>
       <select id="main-category" class="menu-select">
         <option value="">-- Choose Board --</option>
-        <option value="gateway_multi">Gateway Board</option> <!-- Öppnar undermenyn -->
+        <option value="gateway_multi">Gateway Board</option> <!-- Öppnar Gateway-undermeny -->
+        <option value="mp3_multi">MP3 Board</option>         <!-- Öppnar MP3-undermeny -->
         <option value="./manifest_pca.json">PCA9685 Board</option>
-        <option value="./manifest_mp3.json">MP3 Board</option>
         <option value="./manifest_multi2.json">Multi II Board</option>
       </select>
 
-      <!-- Steg 2: Undermeny (Visas bara om man valde Gateway Board) -->
-      <div id="sub-category-container" class="hidden">
-        <label for="sub-category"><strong>Select Gateway MCU Variant:</strong></label>
-        <select id="sub-category" class="menu-select">
+      <!-- Steg 2A: Undermeny för Gateway -->
+      <div id="gateway-container" class="hidden sub-container">
+        <label for="gateway-select"><strong>Select Gateway MCU Variant:</strong></label>
+        <select id="gateway-select" class="menu-select">
           <option value="">-- Choose Chip & Feature --</option>
           <option value="./manifest_gateway_dcc_in_c6.json">DCC-IN (ESP32-C6)</option>
           <option value="./manifest_gateway_dcc_in_s3.json">DCC-IN (ESP32-S3)</option>
           <option value="./manifest_gateway_dcc_ex_c6.json">DCC-IN + DCC-EX (ESP32-C6)</option>
           <option value="./manifest_gateway_dcc_ex_s3.json">DCC-IN + DCC-EX (ESP32-S3)</option>
+        </select>
+      </div>
+
+      <!-- Steg 2B: Undermeny för MP3 -->
+      <div id="mp3-container" class="hidden sub-container">
+        <label for="mp3-select"><strong>Select MP3 Board Variant:</strong></label>
+        <select id="mp3-select" class="menu-select">
+          <option value="">-- Choose Wattage --</option>
+          <option value="./manifest_mp3_3w.json">MP3-3W</option>
+          <option value="./manifest_mp3_5w.json">MP3-5W</option>
+          <option value="./manifest_mp3_10w.json">MP3-10/20W</option>
         </select>
       </div>
 
@@ -133,37 +144,51 @@
 
     <script>
       const mainSelect = document.getElementById('main-category');
-      const subSelect = document.getElementById('sub-category');
-      const subContainer = document.getElementById('sub-category-container');
+      const gatewaySelect = document.getElementById('gateway-select');
+      const gatewayContainer = document.getElementById('gateway-container');
+      const mp3Select = document.getElementById('mp3-select');
+      const mp3Container = document.getElementById('mp3-container');
       const button = document.querySelector('esp-web-install-button');
+
+      // Funktion för att dölja alla undermenyer och nollställa deras val
+      function resetSubMenus() {
+        document.querySelectorAll('.sub-container').forEach(container => {
+          container.classList.add('hidden');
+        });
+        gatewaySelect.value = "";
+        mp3Select.value = "";
+        button.classList.add('invisible');
+        button.removeAttribute('manifest');
+      }
 
       // Hantera val i huvudmenyn
       mainSelect.addEventListener('change', () => {
         const val = mainSelect.value;
-        
-        // Återställ undermenyn och dölj installer-knappen vid byte
-        subSelect.value = "";
-        button.classList.add('invisible');
-        button.removeAttribute('manifest');
+        resetSubMenus();
 
         if (val === "gateway_multi") {
-          // Om Gateway väljs: Visa undermenyn
-          subContainer.classList.remove('hidden');
+          gatewayContainer.classList.remove('hidden');
+        } else if (val === "mp3_multi") {
+          mp3Container.classList.remove('hidden');
         } else if (val) {
-          // Om ett fristående kort väljs: Dölj undermenyn och aktivera knappen direkt
-          subContainer.classList.add('hidden');
+          // Direktval för kort utan undermenyer (PCA9685 / Multi II)
           button.manifest = val;
           button.classList.remove('invisible');
-        } else {
-          // Om inget är valt
-          subContainer.classList.add('hidden');
         }
       });
 
-      // Hantera val i undermenyn (Gateway-varianterna)
-      subSelect.addEventListener('change', () => {
-        const manifestPath = subSelect.value;
+      // Lyssna på Gateway-undermenyn
+      gatewaySelect.addEventListener('change', () => {
+        handleSubMenuSelection(gatewaySelect.value);
+      });
 
+      // Lyssna på MP3-undermenyn
+      mp3Select.addEventListener('change', () => {
+        handleSubMenuSelection(mp3Select.value);
+      });
+
+      // Gemensam funktion för att sätta manifest-filen från undermenyer
+      function handleSubMenuSelection(manifestPath) {
         if (manifestPath) {
           button.manifest = manifestPath;
           button.classList.remove('invisible');
@@ -171,7 +196,7 @@
           button.classList.add('invisible');
           button.removeAttribute('manifest');
         }
-      });
+      }
     </script>
   </body>
 </html>
