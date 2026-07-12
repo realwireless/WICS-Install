@@ -65,6 +65,17 @@
         list-style: none;
         line-height: 2em;
       }
+      /* Stil för dropdowns */
+      .menu-select {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0 20px 0;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        color: #000;
+      }
       @media (prefers-color-scheme: dark) {
         body {
           background-color: #333;
@@ -72,6 +83,11 @@
         }
         a {
           color: #58a6ff;
+        }
+        .menu-select {
+          background-color: #444;
+          color: #fff;
+          border: 1px solid #555;
         }
       }
     </style>
@@ -82,42 +98,80 @@
     <div class="content">
       <h1>WICS-ESP32 installer</h1>
       <p>Only the Gateways and the PCA9685 Board is available for installation today.</p>
-      <p>Select your Board</p>
-      <ul class="radios">
-        <li>
-          <label><input type="radio" name="type" value="gateway" /> Gateway Board - DCC-IN</label>
-        </li>
-        <li>
-          <label><input type="radio" name="type" value="gateway1" /> Gateway Board - DCC-IN + DCC-EX</label>
-        </li>
-        <li>
-          <label><input type="radio" name="type" value="pca" /> PCA9685 Board</label>
-        </li>
-        <li>
-          <label><input type="radio" name="type" value="mp3" /> MP3 Board</label>
-        </li>
-        <li>  
-          <label><input type="radio" name="type" value="multi2" /> Multi II Board</label>
-        </li>
-       </ul>
+      
+      <!-- Steg 1: Huvudval av kort -->
+      <label for="main-category"><strong>Select Board:</strong></label>
+      <select id="main-category" class="menu-select">
+        <option value="">-- Choose Board --</option>
+        <option value="gateway_multi">Gateway Board</option> <!-- Öppnar undermenyn -->
+        <option value="./manifest_pca.json">PCA9685 Board</option>
+        <option value="./manifest_mp3.json">MP3 Board</option>
+        <option value="./manifest_multi2.json">Multi II Board</option>
+      </select>
+
+      <!-- Steg 2: Undermeny (Visas bara om man valde Gateway Board) -->
+      <div id="sub-category-container" class="hidden">
+        <label for="sub-category"><strong>Select Gateway MCU Variant:</strong></label>
+        <select id="sub-category" class="menu-select">
+          <option value="">-- Choose Chip & Feature --</option>
+          <option value="./manifest_gateway_dcc_in_c6.json">DCC-IN (ESP32-C6)</option>
+          <option value="./manifest_gateway_dcc_in_s3.json">DCC-IN (ESP32-S3)</option>
+          <option value="./manifest_gateway_dcc_ex_c6.json">DCC-IN + DCC-EX (ESP32-C6)</option>
+          <option value="./manifest_gateway_dcc_ex_s3.json">DCC-IN + DCC-EX (ESP32-S3)</option>
+        </select>
+      </div>
+
       <p class="button-row" align="center">
         <esp-web-install-button class="invisible"></esp-web-install-button>
       </p>
 
       <div class="footer">
-        <a href="https://github.io"
-          >WICS - Wireless Control System</a
-        > &mdash;
-        Installer powered by <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a>.
+        <a href="https://github.io">WICS - Wireless Control System</a> &mdash;
+        Installer powered by <a href="https://github.io">ESP Web Tools</a>.
+      </div>
     </div>
+
     <script>
-      document.querySelectorAll('input[name="type"]').forEach(radio =>
-        radio.addEventListener("change", () => {
-          const button = document.querySelector('esp-web-install-button');
-          button.manifest = `./manifest_${radio.value}.json`;
+      const mainSelect = document.getElementById('main-category');
+      const subSelect = document.getElementById('sub-category');
+      const subContainer = document.getElementById('sub-category-container');
+      const button = document.querySelector('esp-web-install-button');
+
+      // Hantera val i huvudmenyn
+      mainSelect.addEventListener('change', () => {
+        const val = mainSelect.value;
+        
+        // Återställ undermenyn och dölj installer-knappen vid byte
+        subSelect.value = "";
+        button.classList.add('invisible');
+        button.removeAttribute('manifest');
+
+        if (val === "gateway_multi") {
+          // Om Gateway väljs: Visa undermenyn
+          subContainer.classList.remove('hidden');
+        } else if (val) {
+          // Om ett fristående kort väljs: Dölj undermenyn och aktivera knappen direkt
+          subContainer.classList.add('hidden');
+          button.manifest = val;
           button.classList.remove('invisible');
+        } else {
+          // Om inget är valt
+          subContainer.classList.add('hidden');
         }
-      ));
+      });
+
+      // Hantera val i undermenyn (Gateway-varianterna)
+      subSelect.addEventListener('change', () => {
+        const manifestPath = subSelect.value;
+
+        if (manifestPath) {
+          button.manifest = manifestPath;
+          button.classList.remove('invisible');
+        } else {
+          button.classList.add('invisible');
+          button.removeAttribute('manifest');
+        }
+      });
     </script>
   </body>
 </html>
