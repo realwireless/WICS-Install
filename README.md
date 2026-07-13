@@ -12,8 +12,8 @@ Installation of nowRail and WICS add-on software to the ESP32 Microcontroller
   while you powering up (connecting the USB cable) the Microcontroller.
   
   Installation:
-  1 Connect the Microcontroller with a "real" USB-cable (not a charging cable). 
-  2 Select the WICS Board from the menu/submwenu and click the "Connect" button.
-  3 Follow the instructions on the screen.
-  4 When done, Reboot the Microcontroller.
-  5 Upload your configuration file (using ESP-Connect).
+  - 1. Connect the Microcontroller with a "real" USB-cable (not a charging cable). 
+  - 2. Select the WICS Board from the menu/submwenu and click the "Connect" button.
+  - 3. Follow the instructions on the screen.
+  - 4. When done, Reboot the Microcontroller.
+  - 5. Upload your configuration file (using ESP-Connect).
