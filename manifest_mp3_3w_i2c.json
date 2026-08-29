@@ -1,0 +1,15 @@
+{
+  "name": "WICS MP3 Board 3W I2C",
+  "version": "1.0.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "firmware_mp3_3w_i2c.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}
